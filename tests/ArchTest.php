@@ -17,3 +17,7 @@ arch('all contracts are interfaces')
     ->expect('HamroCDN\Contracts')
     ->classes()
     ->toBeInterfaces();
+
+arch('class implements contract')
+    ->expect('HamroCDN\HamroCDN')
+    ->toImplement('HamroCDN\Contracts\HamroCDNContract');
