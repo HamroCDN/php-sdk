@@ -42,9 +42,7 @@
         "php": ">=8.0"
     },
     "require-dev": {
-        "larastan/larastan": "^3.7",
         "laravel/pint": "^1.25",
-        "orchestra/testbench": "^10.6",
         "pestphp/pest": "^4.1",
         "phpstan/phpstan": "^2.1",
         "rector/rector": "^2.2"
