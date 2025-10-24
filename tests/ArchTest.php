@@ -12,3 +12,8 @@ arch('all classes are final')
     ->expect('HamroCDN')
     ->classes()
     ->toBeFinal();
+
+arch('all contracts are interfaces')
+    ->expect('HamroCDN\Contracts')
+    ->classes()
+    ->toBeInterfaces();
