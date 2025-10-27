@@ -30,26 +30,7 @@ final class HamroCDN implements HamroCDNContract
 
     public function index(): array
     {
-        return [
-            [
-                'nanoId' => 'abcde12345',
-                'user' => true,
-                'delete_at' => null,
-                'original' => [
-                    'url' => 'https://hamrocdn.com/files/abcde12345/original.jpg',
-                    'size' => 204800,
-                ],
-            ],
-            [
-                'nanoId' => 'fghij67890',
-                'user' => false,
-                'delete_at' => null,
-                'original' => [
-                    'url' => 'https://hamrocdn.com/files/fghij67890/original.jpg',
-                    'size' => 204800,
-                ],
-            ],
-        ];
+        return $this->get('uploads');
     }
 
     public function fetch(string $nanoId): array
