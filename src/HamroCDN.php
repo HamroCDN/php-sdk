@@ -6,32 +6,38 @@ namespace HamroCDN;
 
 use HamroCDN\Contracts\HamroCDNContract;
 
-/**
- * @phpstan-type HamroCDNObject array{
- *     id: string,
- *     nanoId: string,
- * }
- */
 final class HamroCDN implements HamroCDNContract
 {
+    public function index(): array
+    {
+        return [
+            [
+                'nanoId' => 'abcde12345',
+            ],
+            [
+                'nanoId' => 'fghij67890',
+            ],
+        ];
+    }
+
+    public function fetch(string $nanoId): array
+    {
+        return [
+            'nanoId' => $nanoId,
+        ];
+    }
+
     public function upload(string $filePath): array
     {
         return [
-            'id' => 'sample_id',
-            'nanoId' => 'sample_nano_id',
+            'nanoId' => 'newfile12345',
         ];
     }
 
-    public function fetch(string $id): array
+    public function uploadByURL(string $url): array
     {
         return [
-            'id' => 'sample_id',
-            'nanoId' => 'sample_nano_id',
+            'nanoId' => 'urlfile67890',
         ];
-    }
-
-    public function delete(string $id): bool
-    {
-        return true;
     }
 }
