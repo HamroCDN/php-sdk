@@ -6,27 +6,16 @@ namespace HamroCDN;
 
 use GuzzleHttp\Client;
 use HamroCDN\Contracts\HamroCDNContract;
+use HamroCDN\Traits\HasConfigValues;
 use HamroCDN\Traits\Requestable;
 
 final class HamroCDN implements HamroCDNContract
 {
-    use Requestable;
-    private string $apiKey;
-
-    private string $baseUrl;
+    use HasConfigValues, Requestable;
 
     public function __construct(?string $apiKey = null, ?string $baseUrl = null, ?Client $client = null)
     {
-        $this->apiKey = $apiKey
-            ?? getenv('HAMROCDN_API_KEY')
-            ?? (function_exists('config') ? (config('hamrocdn.api_key') ?? '') : '');
-
-        $this->baseUrl = rtrim(
-            $baseUrl
-            ?? getenv('HAMROCDN_API_URL')
-            ?? (function_exists('config') ? (config('hamrocdn.api_url') ?? 'https://hamrocdn.com/api') : 'https://hamrocdn.com/api'),
-            '/'
-        );
+        [$this->apiKey, $this->baseUrl] = $this->resolveConfig($apiKey, $baseUrl);
 
         $this->client = $client ?? new Client([
             'base_uri' => "{$this->baseUrl}/",
