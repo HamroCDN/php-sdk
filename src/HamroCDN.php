@@ -4,10 +4,41 @@ declare(strict_types=1);
 
 namespace HamroCDN;
 
+use GuzzleHttp\Client;
 use HamroCDN\Contracts\HamroCDNContract;
 
 final class HamroCDN implements HamroCDNContract
 {
+    private Client $client;
+
+    private string $apiKey;
+
+    private string $baseUrl;
+
+    public function __construct(?string $apiKey = null, ?string $baseUrl = null, ?Client $client = null)
+    {
+        $this->apiKey = $apiKey
+            ?? getenv('HAMROCDN_API_KEY')
+            ?? (function_exists('config') ? (config('hamrocdn.api_key') ?? '') : '');
+
+        $this->baseUrl = rtrim(
+            $baseUrl
+            ?? getenv('HAMROCDN_API_URL')
+            ?? (function_exists('config') ? (config('hamrocdn.api_url') ?? 'https://hamrocdn.com/api') : 'https://hamrocdn.com/api'),
+            '/'
+        );
+
+        $this->client = $client ?? new Client([
+            'base_uri' => "{$this->baseUrl}/",
+            'timeout' => 15,
+            'verify' => true,
+            'headers' => [
+                'X-API-KEY' => $this->apiKey,
+                'Accept' => 'application/json',
+            ],
+        ]);
+    }
+
     public function index(): array
     {
         return [
