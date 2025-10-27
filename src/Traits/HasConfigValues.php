@@ -45,9 +45,8 @@ trait HasConfigValues
      */
     private function getConfigValue(string $key): ?string
     {
-        return $this->stringOrNull(
-            function_exists('config') ? config($key) : null
-        );
+        /** @var string|null */
+        return function_exists('config') ? config($key) : null;
     }
 
     /**
