@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HamroCDN\HamroCDN;
+
 it('returns an array of HamroCDN objects from index', function () {
     $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api');
 

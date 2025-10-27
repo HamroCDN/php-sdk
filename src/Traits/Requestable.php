@@ -11,6 +11,7 @@ use RuntimeException;
 
 /**
  * @phpstan-import-type HamroCDNObject from HamroCDNContract
+ *
  * @template T
  */
 trait Requestable
