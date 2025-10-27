@@ -10,7 +10,7 @@ use RuntimeException;
 
 trait Requestable
 {
-    private Client $client;
+    protected Client $client;
 
     /**
      * @template T
