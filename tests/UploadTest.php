@@ -86,7 +86,8 @@ it('uploads a file by URL and returns a HamroCDN object', function () {
 describe('exception', function () {
     it('throws exception when API key is missing', function () {
         $this->expectException(RuntimeException::class);
-        new HamroCDN();
+        $client = new HamroCDN();
+        $client->index();
     });
 
     it('throws exception when uploading a non-existing file', function () {
