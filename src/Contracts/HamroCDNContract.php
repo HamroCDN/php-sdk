@@ -10,6 +10,7 @@ namespace HamroCDN\Contracts;
  *     size: int
  * }
  * @phpstan-type HamroCDNUser bool
+ *
  * @phpstan-type HamroCDNObject array{
  *     nanoId: string,
  *     user: HamroCDNUser,
