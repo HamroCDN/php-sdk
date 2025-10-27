@@ -3,11 +3,6 @@
 declare(strict_types=1);
 
 use HamroCDN\HamroCDN;
-
-it('throws exception when API key is missing', function () {
-    $this->expectException(RuntimeException::class);
-    new HamroCDN();
-});
 it('returns an array of HamroCDN objects from index', function () {
     $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api');
 
@@ -61,15 +56,6 @@ it('uploads a file and returns a HamroCDN object', function () {
     expect($fetchedData['nanoId'])->toBe($data['nanoId']);
 });
 
-it('throws exception when uploading a non-existing file', function () {
-    $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api');
-
-    $filePath = __DIR__.'/non-existing-file.png';
-
-    $this->expectException(RuntimeException::class);
-    $client->upload($filePath);
-});
-
 it('uploads a file by URL and returns a HamroCDN object', function () {
     $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api');
 
@@ -96,15 +82,31 @@ it('uploads a file by URL and returns a HamroCDN object', function () {
     expect($fetchedData['nanoId'])->toBe($data['nanoId']);
 });
 
-it('throws exception when returns invalid json', function () {
-    $mockHandler = new GuzzleHttp\Handler\MockHandler([
-        new GuzzleHttp\Psr7\Response(200, [], 'Invalid JSON'),
-    ]);
-    $handlerStack = GuzzleHttp\HandlerStack::create($mockHandler);
-    $guzzleClient = new GuzzleHttp\Client(['handler' => $handlerStack]);
+describe('exception', function () {
+    it('throws exception when API key is missing', function () {
+        $this->expectException(RuntimeException::class);
+        new HamroCDN();
+    });
 
-    $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api', $guzzleClient);
+    it('throws exception when uploading a non-existing file', function () {
+        $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api');
 
-    $this->expectException(RuntimeException::class);
-    $client->index();
+        $filePath = __DIR__.'/non-existing-file.png';
+
+        $this->expectException(RuntimeException::class);
+        $client->upload($filePath);
+    });
+
+    it('throws exception when returns invalid json', function () {
+        $mockHandler = new GuzzleHttp\Handler\MockHandler([
+            new GuzzleHttp\Psr7\Response(200, [], 'Invalid JSON'),
+        ]);
+        $handlerStack = GuzzleHttp\HandlerStack::create($mockHandler);
+        $guzzleClient = new GuzzleHttp\Client(['handler' => $handlerStack]);
+
+        $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api', $guzzleClient);
+
+        $this->expectException(RuntimeException::class);
+        $client->index();
+    });
 });
