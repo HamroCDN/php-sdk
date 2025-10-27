@@ -20,8 +20,11 @@ namespace HamroCDN\Contracts;
  *     delete_at: string|null,
  *     original: HamroCDNFile
  * }
+ * @phpstan-type HamroCDNData array{
+ *     data: HamroCDNObject
+ * }
  * @phpstan-type HamroCDNObjectWithPagination array{
- *     data: HamroCDNObject[],
+ *     data: array<HamroCDNObject>,
  *     meta: array{total: int, per_page: int, page: int}
  * }
  */
@@ -37,21 +40,21 @@ interface HamroCDNContract
     /**
      * Fetch a file from HamroCDN.
      *
-     * @return HamroCDNObject
+     * @return HamroCDNData
      */
     public function fetch(string $nanoId): array;
 
     /**
      * Upload a file to HamroCDN.
      *
-     * @return HamroCDNObject
+     * @return HamroCDNData
      */
     public function upload(string $filePath): array;
 
     /**
      * Upload a file to HamroCDN by URL.
      *
-     * @return HamroCDNObject
+     * @return HamroCDNData
      */
     public function uploadByURL(string $url): array;
 }

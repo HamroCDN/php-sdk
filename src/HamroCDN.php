@@ -12,13 +12,13 @@ use HamroCDN\Traits\Requestable;
 use RuntimeException;
 
 /**
- * @phpstan-import-type HamroCDNObject from HamroCDNContract
+ * @phpstan-import-type HamroCDNData from HamroCDNContract
  * @phpstan-import-type HamroCDNObjectWithPagination from HamroCDNContract
  */
 final class HamroCDN implements HamroCDNContract
 {
     /**
-     * @use Requestable<HamroCDNObject|HamroCDNObjectWithPagination>
+     * @use Requestable<HamroCDNData>
      */
     use HasConfigValues, Requestable;
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 use HamroCDN\HamroCDN;
 
 it('returns an array of HamroCDN objects from index', function () {
-    $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api');
+    $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api');
 
     $uploads = $client->index();
 
@@ -33,7 +33,7 @@ it('returns an array of HamroCDN objects from index', function () {
 });
 
 it('uploads a file and returns a HamroCDN object', function () {
-    $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api');
+    $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api');
 
     $filePath = __DIR__.'/test.png';
     $upload = $client->upload($filePath);
@@ -58,7 +58,7 @@ it('uploads a file and returns a HamroCDN object', function () {
 });
 
 it('uploads a file by URL and returns a HamroCDN object', function () {
-    $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api');
+    $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api');
 
     $fileUrl = 'https://placehold.co/1000x1000/000000/FFFFFF?text=HamroCDN';
 
@@ -90,7 +90,7 @@ describe('exception', function () {
     });
 
     it('throws exception when uploading a non-existing file', function () {
-        $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api');
+        $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api');
 
         $filePath = __DIR__.'/non-existing-file.png';
 
@@ -105,7 +105,7 @@ describe('exception', function () {
         $handlerStack = GuzzleHttp\HandlerStack::create($mockHandler);
         $guzzleClient = new GuzzleHttp\Client(['handler' => $handlerStack]);
 
-        $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api', $guzzleClient);
+        $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api', $guzzleClient);
 
         $this->expectException(RuntimeException::class);
         $client->index();
