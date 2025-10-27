@@ -6,11 +6,11 @@ namespace HamroCDN;
 
 use GuzzleHttp\Client;
 use HamroCDN\Contracts\HamroCDNContract;
+use HamroCDN\Traits\Requestable;
 
 final class HamroCDN implements HamroCDNContract
 {
-    private Client $client;
-
+    use Requestable;
     private string $apiKey;
 
     private string $baseUrl;
