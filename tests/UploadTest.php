@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use HamroCDN\HamroCDN;
+
 it('returns an array of HamroCDN objects from index', function () {
     $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api');
 
@@ -29,4 +30,18 @@ it('returns an array of HamroCDN objects from index', function () {
         ->toHaveKey('total')
         ->toHaveKey('per_page')
         ->toHaveKey('page');
+});
+
+it('uploads a file and returns a HamroCDN object', function () {
+    $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api');
+
+    $filePath = __DIR__.'/test.png';
+    $upload = $client->upload($filePath);
+    $data = $upload['data'];
+
+    expect($data)
+        ->toHaveKey('nanoId')
+        ->toHaveKey('user')
+        ->toHaveKey('delete_at')
+        ->toHaveKey('original');
 });

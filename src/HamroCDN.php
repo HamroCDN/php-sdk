@@ -9,6 +9,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use HamroCDN\Contracts\HamroCDNContract;
 use HamroCDN\Traits\HasConfigValues;
 use HamroCDN\Traits\Requestable;
+use RuntimeException;
 
 /**
  * @phpstan-import-type HamroCDNObject from HamroCDNContract
@@ -38,6 +39,7 @@ final class HamroCDN implements HamroCDNContract
 
     /**
      * @return HamroCDNObjectWithPagination
+     *
      * @throws GuzzleException
      */
     public function index(): array
@@ -61,15 +63,19 @@ final class HamroCDN implements HamroCDNContract
 
     public function upload(string $filePath): array
     {
-        return [
-            'nanoId' => 'newfile12345',
-            'user' => false,
-            'delete_at' => null,
-            'original' => [
-                'url' => 'https://hamrocdn.com/files/newfile12345/original.jpg',
-                'size' => 204800,
+        if (! file_exists($filePath)) {
+            throw new RuntimeException("File not found: {$filePath}");
+        }
+
+        return $this->post('uploads', [
+            'multipart' => [
+                [
+                    'name' => 'file',
+                    'contents' => fopen($filePath, 'r'),
+                    'filename' => basename($filePath),
+                ],
             ],
-        ];
+        ]);
     }
 
     public function uploadByURL(string $url): array
