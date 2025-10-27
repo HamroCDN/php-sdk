@@ -17,6 +17,7 @@ trait Requestable
     /**
      * @param  array<string,mixed>  $query
      * @return HamroCDNObject
+     *
      * @throws RuntimeException|GuzzleException
      */
     private function get(string $endpoint, array $query = []): array
@@ -29,6 +30,7 @@ trait Requestable
     /**
      * @param  array<string,mixed>  $options
      * @return HamroCDNObject
+     *
      * @throws RuntimeException|GuzzleException
      */
     private function post(string $endpoint, array $options = []): array

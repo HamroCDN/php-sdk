@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\DeadCode\Rector\Node\RemoveNonExistingVarAnnotationRector;
 
 try {
     return RectorConfig::configure()
@@ -16,6 +17,9 @@ try {
             privatization: true,
             earlyReturn: true,
         )
+        ->withSkip([
+            RemoveNonExistingVarAnnotationRector::class,
+        ])
         ->withPhpSets(
             php84: true,
         );
