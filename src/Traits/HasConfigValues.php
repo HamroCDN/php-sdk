@@ -21,14 +21,14 @@ trait HasConfigValues
     {
         $defaultURL = 'https://hamrocdn.com/api';
 
-        $this->apiKey = $apiKey
-            ?? $this->getConfigValue('hamrocdn.api_key')
-            ?? getenv('HAMROCDN_API_KEY');
+        $this->apiKey = $this->isEmpty($apiKey)
+            ?? $this->isEmpty($this->getConfigValue('hamrocdn.api_key'))
+            ?? $this->isEmpty(getenv('HAMROCDN_API_KEY'));
 
         $this->baseUrl = rtrim(
-            $baseUrl
-            ?? $this->getConfigValue('hamrocdn.api_url')
-            ?? getenv('HAMROCDN_API_URL')
+            $this->isEmpty($baseUrl)
+            ?? $this->isEmpty($this->getConfigValue('hamrocdn.api_url'))
+            ?? $this->isEmpty(getenv('HAMROCDN_API_URL'))
             ?? $defaultURL,
             '/'
         );
@@ -38,6 +38,20 @@ trait HasConfigValues
         }
 
         return [$this->apiKey, $this->baseUrl];
+    }
+
+    /**
+     * @template T
+     *
+     * Check if the value is empty or not.
+     * In return, it returns the value if not empty and false otherwise.
+     *
+     * @param  T  $value
+     * @return T|bool
+     */
+    private function isEmpty(mixed $value): mixed
+    {
+        return empty($value) ? false : $value;
     }
 
     /**

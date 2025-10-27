@@ -33,9 +33,21 @@ final class HamroCDN implements HamroCDNContract
         return [
             [
                 'nanoId' => 'abcde12345',
+                'user' => true,
+                'delete_at' => null,
+                'original' => [
+                    'url' => 'https://hamrocdn.com/files/abcde12345/original.jpg',
+                    'size' => 204800,
+                ],
             ],
             [
                 'nanoId' => 'fghij67890',
+                'user' => false,
+                'delete_at' => null,
+                'original' => [
+                    'url' => 'https://hamrocdn.com/files/fghij67890/original.jpg',
+                    'size' => 204800,
+                ],
             ],
         ];
     }
@@ -44,6 +56,12 @@ final class HamroCDN implements HamroCDNContract
     {
         return [
             'nanoId' => $nanoId,
+            'user' => false,
+            'delete_at' => null,
+            'original' => [
+                'url' => "https://hamrocdn.com/files/{$nanoId}/original.jpg",
+                'size' => 204800,
+            ],
         ];
     }
 
@@ -51,6 +69,12 @@ final class HamroCDN implements HamroCDNContract
     {
         return [
             'nanoId' => 'newfile12345',
+            'user' => false,
+            'delete_at' => null,
+            'original' => [
+                'url' => 'https://hamrocdn.com/files/newfile12345/original.jpg',
+                'size' => 204800,
+            ],
         ];
     }
 
@@ -58,6 +82,12 @@ final class HamroCDN implements HamroCDNContract
     {
         return [
             'nanoId' => 'urlfile67890',
+            'user' => false,
+            'delete_at' => null,
+            'original' => [
+                'url' => 'https://hamrocdn.com/files/urlfile67890/original.jpg',
+                'size' => 204800,
+            ],
         ];
     }
 }
