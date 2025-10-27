@@ -9,14 +9,17 @@ use GuzzleHttp\Exception\GuzzleException;
 use HamroCDN\Contracts\HamroCDNContract;
 use RuntimeException;
 
-/** @phpstan-import-type HamroCDNObject from HamroCDNContract */
+/**
+ * @phpstan-import-type HamroCDNObject from HamroCDNContract
+ * @template T
+ */
 trait Requestable
 {
     protected Client $client;
 
     /**
      * @param  array<string,mixed>  $query
-     * @return HamroCDNObject
+     * @return T
      *
      * @throws RuntimeException|GuzzleException
      */
@@ -29,7 +32,7 @@ trait Requestable
 
     /**
      * @param  array<string,mixed>  $options
-     * @return HamroCDNObject
+     * @return T
      *
      * @throws RuntimeException|GuzzleException
      */
@@ -41,13 +44,13 @@ trait Requestable
     }
 
     /**
-     * @return HamroCDNObject
+     * @return T
      *
      * @throws RuntimeException
      */
     private function decodeResponse(string $json): array
     {
-        /** @var HamroCDNObject $decoded */
+        /** @var T $decoded */
         $decoded = json_decode($json, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new RuntimeException('Invalid JSON returned by API.');

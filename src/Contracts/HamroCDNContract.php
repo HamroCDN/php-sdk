@@ -16,13 +16,18 @@ namespace HamroCDN\Contracts;
  *     delete_at: string|null,
  *     original: HamroCDNFile
  * }
+ *
+ * @phpstan-type HamroCDNObjectWithPagination array{
+ *     data: HamroCDNObject[],
+ *     meta: array{total: int, per_page: int, page: int}
+ * }
  */
 interface HamroCDNContract
 {
     /**
      * List all of your files in HamroCDN.
      *
-     * @return HamroCDNObject[]
+     * @return HamroCDNObjectWithPagination
      */
     public function index(): array;
 

@@ -5,12 +5,20 @@ declare(strict_types=1);
 namespace HamroCDN;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use HamroCDN\Contracts\HamroCDNContract;
 use HamroCDN\Traits\HasConfigValues;
 use HamroCDN\Traits\Requestable;
 
+/**
+ * @phpstan-import-type HamroCDNObject from HamroCDNContract
+ * @phpstan-import-type HamroCDNObjectWithPagination from HamroCDNContract
+ */
 final class HamroCDN implements HamroCDNContract
 {
+    /**
+     * @use Requestable<HamroCDNObject|HamroCDNObjectWithPagination>
+     */
     use HasConfigValues, Requestable;
 
     public function __construct(?string $apiKey = null, ?string $baseUrl = null, ?Client $client = null)
@@ -28,8 +36,13 @@ final class HamroCDN implements HamroCDNContract
         ]);
     }
 
+    /**
+     * @return HamroCDNObjectWithPagination
+     * @throws GuzzleException
+     */
     public function index(): array
     {
+        /** @var HamroCDNObjectWithPagination */
         return $this->get('uploads');
     }
 
