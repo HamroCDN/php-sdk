@@ -42,10 +42,13 @@ final class HamroCDN implements HamroCDNContract
      *
      * @throws GuzzleException
      */
-    public function index(): array
+    public function index(?int $per_page = 20, ?int $page = 1): array
     {
         /** @var HamroCDNObjectWithPagination */
-        return $this->get('uploads');
+        return $this->get('uploads', [
+            'per_page' => $per_page,
+            'page' => $page,
+        ]);
     }
 
     public function fetch(string $nanoId): array
