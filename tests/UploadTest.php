@@ -44,4 +44,16 @@ it('uploads a file and returns a HamroCDN object', function () {
         ->toHaveKey('user')
         ->toHaveKey('delete_at')
         ->toHaveKey('original');
+
+    $fetchResponse = $client->fetch($data['nanoId']);
+    var_dump($fetchResponse);
+    $fetchedData = $fetchResponse['data'];
+
+    expect($fetchedData)
+        ->toHaveKey('nanoId')
+        ->toHaveKey('user')
+        ->toHaveKey('delete_at')
+        ->toHaveKey('original');
+
+    expect($fetchedData['nanoId'])->toBe($data['nanoId']);
 });
