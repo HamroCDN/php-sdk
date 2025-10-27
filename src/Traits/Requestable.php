@@ -51,7 +51,7 @@ trait Requestable
     private function decodeResponse(string $json): array
     {
         /** @var T $decoded */
-        $decoded = json_decode($json, true)['data'];
+        $decoded = json_decode($json, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new RuntimeException('Invalid JSON returned by API.');
         }
