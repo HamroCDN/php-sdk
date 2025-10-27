@@ -57,6 +57,15 @@ it('uploads a file and returns a HamroCDN object', function () {
     expect($fetchedData['nanoId'])->toBe($data['nanoId']);
 });
 
+it('throws exception when uploading a non-existing file', function () {
+    $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api');
+
+    $filePath = __DIR__.'/non-existing-file.png';
+
+    $this->expectException(RuntimeException::class);
+    $client->upload($filePath);
+});
+
 it('uploads a file by URL and returns a HamroCDN object', function () {
     $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api');
 
