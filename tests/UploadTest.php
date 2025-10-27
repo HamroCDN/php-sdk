@@ -46,7 +46,32 @@ it('uploads a file and returns a HamroCDN object', function () {
         ->toHaveKey('original');
 
     $fetchResponse = $client->fetch($data['nanoId']);
-    var_dump($fetchResponse);
+    $fetchedData = $fetchResponse['data'];
+
+    expect($fetchedData)
+        ->toHaveKey('nanoId')
+        ->toHaveKey('user')
+        ->toHaveKey('delete_at')
+        ->toHaveKey('original');
+
+    expect($fetchedData['nanoId'])->toBe($data['nanoId']);
+});
+
+it('uploads a file by URL and returns a HamroCDN object', function () {
+    $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api');
+
+    $fileUrl = 'https://placehold.co/1000x1000/000000/FFFFFF?text=HamroCDN';
+
+    $upload = $client->uploadByURL($fileUrl);
+    $data = $upload['data'];
+
+    expect($data)
+        ->toHaveKey('nanoId')
+        ->toHaveKey('user')
+        ->toHaveKey('delete_at')
+        ->toHaveKey('original');
+
+    $fetchResponse = $client->fetch($data['nanoId']);
     $fetchedData = $fetchResponse['data'];
 
     expect($fetchedData)

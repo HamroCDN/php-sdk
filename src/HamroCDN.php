@@ -75,14 +75,10 @@ final class HamroCDN implements HamroCDNContract
 
     public function uploadByURL(string $url): array
     {
-        return [
-            'nanoId' => 'urlfile67890',
-            'user' => false,
-            'delete_at' => null,
-            'original' => [
-                'url' => 'https://hamrocdn.com/files/urlfile67890/original.jpg',
-                'size' => 204800,
+        return $this->post('upload-from-url', [
+            'json' => [
+                'url' => $url,
             ],
-        ];
+        ]);
     }
 }
