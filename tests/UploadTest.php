@@ -8,20 +8,23 @@ use HamroCDN\Models\Upload;
 use HamroCDN\Models\User;
 
 expect()->extend('toBeUploadObject', function () {
-    expect($this->value)
+    /** @var Upload $upload */
+    $upload = $this->value;
+
+    expect($upload)
         ->toBeInstanceOf(Upload::class);
 
-    expect($this->value)
+    expect($upload)
         ->toHaveKey('nanoId')
         ->toHaveKey('user')
         ->toHaveKey('delete_at')
         ->toHaveKey('original');
 
-    expect($this->value->getOriginal())
+    expect($upload->getOriginal())
         ->toHaveKey('url')
         ->toHaveKey('size');
 
-    expect($this->value->getUser())
+    expect($upload->getUser())
         ->toBeInstanceOf(User::class);
 });
 
