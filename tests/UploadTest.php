@@ -28,6 +28,32 @@ expect()->extend('toBeUploadObject', function () {
         ->toBeInstanceOf(User::class);
 });
 
+it('checks the dummy data to have correct value in model', function () {
+    $dummyData = [
+        'nanoId' => 'abc123',
+        'user' => [
+            'name' => 'John Doe',
+            'email' => 'john@hamrocdn.com',
+        ],
+        'delete_at' => null,
+        'original' => [
+            'url' => 'https://hamrocdn.com/abc123.png',
+            'size' => 2048,
+        ],
+    ];
+
+    $upload = Upload::fromArray($dummyData);
+
+    expect($upload)->toBeUploadObject();
+
+    expect($upload->getNanoId())->toBe('abc123');
+    expect($upload->getDeleteAt())->toBeNull();
+    expect($upload->getOriginal()->getUrl())->toBe('https://hamrocdn.com/abc123.png');
+    expect($upload->getOriginal()->getSize())->toBe(2048);
+    expect($upload->getUser()?->getName())->toBe('John Doe');
+    expect($upload->getUser()?->getEmail())->toBe('john@hamrocdn.com');
+});
+
 it('returns an array of HamroCDN objects from index', function () {
     $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api');
 
