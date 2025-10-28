@@ -15,6 +15,10 @@ Install via [Composer](https://getcomposer.org/):
 composer require hamrocdn/sdk
 ```
 
+### Requirements
+- PHP **8.0+**
+- [GuzzleHTTP](https://github.com/guzzle/guzzle) 7.10+
+
 That’s it.  
 No Laravel dependencies, no magic — just pure PHP.
 
@@ -40,12 +44,34 @@ the SDK automatically detects and uses them.
 
 ---
 
+## ⚡ Quick Start
+
+Here’s a quick example showing upload and fetch in action:
+
+```php
+use HamroCDN\HamroCDN;
+
+$cdn = new HamroCDN('your-api-key');
+
+// Upload a file
+$upload = $cdn->upload('/path/to/image.jpg');
+
+echo "Uploaded: " . $upload->getOriginal()->getUrl() . PHP_EOL;
+
+// Fetch it again
+$fetched = $cdn->fetch($upload->getNanoId());
+
+echo "Fetched: " . $fetched->getOriginal()->getUrl() . PHP_EOL;
+```
+
+---
+
 ## 🚀 Usage
 
 ### 1. List Uploads (Paginated)
 
 The `index()` method returns paginated results.  
-You can provide pagination parameters such as `page` and `per_page`.
+You can provide pagination parameters such as `page` and `per_page`:
 
 ```php
 $uploads = $cdn->index(page: 1, per_page: 10);
@@ -173,7 +199,8 @@ The SDK automatically wraps:
 
 ## 🧪 Testing
 
-The SDK is fully covered with [Pest](https://pestphp.com/) tests.
+This SDK is built with [Pest](https://pestphp.com/) and supports **real API integration tests**.  
+A dedicated testing environment is configured within the HamroCDN infrastructure, ensuring safe, production-like validations.
 
 Run tests locally:
 
@@ -193,7 +220,7 @@ It provides service providers, configuration publishing, and automatic Facade bi
 
 ---
 
-## 🧩 Type Safety/Static Analysis
+## 🧩 Type Safety / Static Analysis
 
 - Fully typed with PHPStan annotations
 - 100% PHP 8.0+ compatible
@@ -207,9 +234,13 @@ It provides service providers, configuration publishing, and automatic Facade bi
 
 This package is open-sourced software licensed under the [MIT license](LICENSE.md).
 
+---
+
 ## 🤝 Contributing
 
 Contributions are welcome! Please create a pull request or open an issue if you find any bugs or have feature requests.
+
+---
 
 ## ⭐ Support
 
