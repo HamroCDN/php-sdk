@@ -29,21 +29,17 @@ interface HamroCDNContract
     /**
      * Fetch a file from HamroCDN.
      *
-     * @return HamroCDNData
+     * @return array<Upload>
      */
     public function fetch(string $nanoId): array;
 
     /**
      * Upload a file to HamroCDN.
-     *
-     * @return HamroCDNData
      */
-    public function upload(string $filePath): array;
+    public function upload(string $filePath): Upload;
 
     /**
      * Upload a file to HamroCDN by URL.
-     *
-     * @return HamroCDNData
      */
-    public function uploadByURL(string $url): array;
+    public function uploadByURL(string $url): Upload;
 }
