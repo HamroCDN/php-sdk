@@ -129,14 +129,14 @@ describe('exception', function () {
     });
 
     it('throws network error when Guzzle cannot connect to server. (GET)', function () {
-        $client = new HamroCDN('test-api-key', 'https://hamrocdn123.com/invalid-api');
+        $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/invalid-api');
 
         $this->expectException(HamroCDNException::class);
         $client->index();
     });
 
     it('throws network error when Guzzle cannot connect to server. (POST)', function () {
-        $client = new HamroCDN('test-api-key', 'https://hamrocdn123.com/invalid-api');
+        $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/invalid-api');
 
         $filePath = __DIR__.'/test.png';
 
