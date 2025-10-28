@@ -54,4 +54,22 @@ final class Upload
             'original' => $this->original->toArray(),
         ];
     }
+
+    /** @param HamroCDNObject $data */
+    public static function fromArray(array $data): self
+    {
+        $user = null;
+        if (isset($data['user'])) {
+            $user = User::fromArray($data['user']);
+        }
+
+        $original = File::fromArray($data['original']);
+
+        return new self(
+            $data['nanoId'],
+            $user,
+            $data['delete_at'] ?? null,
+            $original
+        );
+    }
 }

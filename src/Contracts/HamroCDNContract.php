@@ -10,10 +10,10 @@ use HamroCDN\Models\Upload;
  * @phpstan-import-type HamroCDNObject from Upload
  *
  * @phpstan-type HamroCDNData array{
- *     data: Upload
+ *     data: HamroCDNObject
  * }
  * @phpstan-type HamroCDNObjectWithPagination array{
- *     data: array<Upload>,
+ *     data: array<HamroCDNObject>,
  *     meta: array{total: int, per_page: int, page: int}
  * }
  */
@@ -28,10 +28,8 @@ interface HamroCDNContract
 
     /**
      * Fetch a file from HamroCDN.
-     *
-     * @return HamroCDNData
      */
-    public function fetch(string $nanoId): array;
+    public function fetch(string $nanoId): Upload;
 
     /**
      * Upload a file to HamroCDN.
