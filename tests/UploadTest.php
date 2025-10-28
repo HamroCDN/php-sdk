@@ -100,7 +100,7 @@ describe('exception', function () {
         $client->upload($filePath);
     });
 
-    it('throws exception when returns invalid json', function () {
+    it('throws exception when returns invalid json (GET)', function () {
         $mockHandler = new GuzzleHttp\Handler\MockHandler([
             new GuzzleHttp\Psr7\Response(200, [], 'Invalid JSON'),
         ]);
@@ -111,5 +111,36 @@ describe('exception', function () {
 
         $this->expectException(HamroCDNException::class);
         $client->index();
+    });
+
+    it('throws exception when returns invalid json (POST)', function () {
+        $mockHandler = new GuzzleHttp\Handler\MockHandler([
+            new GuzzleHttp\Psr7\Response(200, [], 'Invalid JSON'),
+        ]);
+        $handlerStack = GuzzleHttp\HandlerStack::create($mockHandler);
+        $guzzleClient = new GuzzleHttp\Client(['handler' => $handlerStack]);
+
+        $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api', $guzzleClient);
+
+        $filePath = __DIR__.'/test.png';
+
+        $this->expectException(HamroCDNException::class);
+        $client->upload($filePath);
+    });
+
+    it('throws network error when Guzzle cannot connect to server. (GET)', function () {
+        $client = new HamroCDN('test-api-key', 'https://hamrocdn123.com/invalid-api');
+
+        $this->expectException(HamroCDNException::class);
+        $client->index();
+    });
+
+    it('throws network error when Guzzle cannot connect to server. (POST)', function () {
+        $client = new HamroCDN('test-api-key', 'https://hamrocdn123.com/invalid-api');
+
+        $filePath = __DIR__.'/test.png';
+
+        $this->expectException(HamroCDNException::class);
+        $client->upload($filePath);
     });
 });

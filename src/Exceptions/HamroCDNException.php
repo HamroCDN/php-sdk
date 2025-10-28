@@ -41,14 +41,6 @@ final class HamroCDNException extends Exception
     }
 
     /**
-     * Factory for configuration issues like missing API key.
-     */
-    public static function configuration(string $detail): self
-    {
-        return new self("HamroCDN configuration error: {$detail}", 1003);
-    }
-
-    /**
      * Factory for invalid local file operations.
      */
     public static function fileError(string $path): self
