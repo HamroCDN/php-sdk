@@ -7,10 +7,12 @@ namespace HamroCDN;
 use GuzzleHttp\Client;
 use HamroCDN\Contracts\HamroCDNContract;
 use HamroCDN\Exceptions\HamroCDNException;
+use HamroCDN\Models\Upload;
 use HamroCDN\Traits\HasConfigValues;
 use HamroCDN\Traits\Requestable;
 
 /**
+ * @phpstan-import-type HamroCDNObject from Upload
  * @phpstan-import-type HamroCDNData from HamroCDNContract
  * @phpstan-import-type HamroCDNObjectWithPagination from HamroCDNContract
  */
@@ -37,37 +39,46 @@ final class HamroCDN implements HamroCDNContract
     }
 
     /**
-     * @return HamroCDNObjectWithPagination
-     *
      * @throws HamroCDNException
      */
     public function index(?int $per_page = 20, ?int $page = 1): array
     {
-        /** @var HamroCDNObjectWithPagination */
-        return $this->get('uploads', [
+        /** @var HamroCDNObjectWithPagination $response */
+        $response = $this->get('uploads', [
             'per_page' => $per_page,
             'page' => $page,
         ]);
+
+        return [
+            'data' => array_map(
+                /** @param HamroCDNObject $item */
+                fn (array $item): Upload => Upload::fromArray($item),
+                $response['data']
+            ),
+            'meta' => $response['meta'],
+        ];
     }
 
     /**
      * @throws HamroCDNException
      */
-    public function fetch(string $nanoId): array
+    public function fetch(string $nanoId): Upload
     {
-        return $this->get("uploads/{$nanoId}");
+        $response = $this->get("uploads/{$nanoId}");
+
+        return Upload::fromArray($response['data']);
     }
 
     /**
      * @throws HamroCDNException
      */
-    public function upload(string $filePath): array
+    public function upload(string $filePath): Upload
     {
         if (! file_exists($filePath)) {
             throw HamroCDNException::fileError($filePath);
         }
 
-        return $this->post('uploads', [
+        $response = $this->post('uploads', [
             'multipart' => [
                 [
                     'name' => 'file',
@@ -76,17 +87,21 @@ final class HamroCDN implements HamroCDNContract
                 ],
             ],
         ]);
+
+        return Upload::fromArray($response['data']);
     }
 
     /**
      * @throws HamroCDNException
      */
-    public function uploadByURL(string $url): array
+    public function uploadByURL(string $url): Upload
     {
-        return $this->post('upload-from-url', [
+        $response = $this->post('upload-from-url', [
             'json' => [
                 'url' => $url,
             ],
         ]);
+
+        return Upload::fromArray($response['data']);
     }
 }
