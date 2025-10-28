@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace HamroCDN\Models;
 
+use Carbon\Carbon;
+
 /**
  * @phpstan-import-type HamroCDNUser from User
  * @phpstan-import-type HamroCDNFile from File
@@ -11,7 +13,7 @@ namespace HamroCDN\Models;
  * @phpstan-type HamroCDNObject array{
  *      nanoId: string,
  *      user: HamroCDNUser|null,
- *      delete_at: string|null,
+ *      delete_at: string|Carbon|null,
  *      original: HamroCDNFile
  * }
  * @phpstan-type UploadWithPagination array{
@@ -24,7 +26,7 @@ final class Upload
     public function __construct(
         private string $nanoId,
         private ?User $user,
-        private ?string $deleteAt,
+        private ?Carbon $deleteAt,
         private File $original
     ) {}
 
@@ -41,7 +43,7 @@ final class Upload
         return new self(
             $data['nanoId'],
             $user,
-            $data['delete_at'] ?? null,
+            isset($data['delete_at']) ? new Carbon($data['delete_at']) : null,
             $original
         );
     }
@@ -56,7 +58,7 @@ final class Upload
         return $this->user;
     }
 
-    public function getDeleteAt(): ?string
+    public function getDeleteAt(): ?Carbon
     {
         return $this->deleteAt;
     }
