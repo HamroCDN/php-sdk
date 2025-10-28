@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace HamroCDN\Models;
 
+/**
+ * @phpstan-type HamroCDNUser array{
+ *      name: string,
+ *      email: string
+ *  }
+ */
 final class User
 {
     private string $name;
@@ -31,5 +37,16 @@ final class User
             'name' => $this->name,
             'email' => $this->email,
         ];
+    }
+
+    /**
+     * @param HamroCDNUser $data
+     */
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            $data['name'] ?? '',
+            $data['email'] ?? '',
+        );
     }
 }

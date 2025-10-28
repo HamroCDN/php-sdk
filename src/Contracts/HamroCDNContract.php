@@ -4,22 +4,11 @@ declare(strict_types=1);
 
 namespace HamroCDN\Contracts;
 
+use HamroCDN\Models\Upload;
+
 /**
- * @phpstan-type HamroCDNFile array{
- *     url: string,
- *     size: int
- * }
- * @phpstan-type HamroCDNUser array{
- *     name: string,
- *     email: string,
- *     role: string
- * }
- * @phpstan-type HamroCDNObject array{
- *     nanoId: string,
- *     user: HamroCDNUser,
- *     delete_at: string|null,
- *     original: HamroCDNFile
- * }
+ * @phpstan-import-type HamroCDNObject from Upload
+ *
  * @phpstan-type HamroCDNData array{
  *     data: HamroCDNObject
  * }

@@ -4,6 +4,12 @@ declare(strict_types=1);
 
 namespace HamroCDN\Models;
 
+/**
+ * @phpstan-type HamroCDNFile array{
+ *      url: string,
+ *      size: int
+ *  }
+ */
 final class File
 {
     private string $url;
@@ -32,5 +38,14 @@ final class File
             'url' => $this->url,
             'size' => $this->size,
         ];
+    }
+
+    /** @param HamroCDNFile $data */
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            $data['url'] ?? '',
+            (int) ($data['size'] ?? 0),
+        );
     }
 }

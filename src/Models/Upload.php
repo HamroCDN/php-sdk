@@ -4,6 +4,17 @@ declare(strict_types=1);
 
 namespace HamroCDN\Models;
 
+/**
+ * @phpstan-import-type HamroCDNUser from User
+ * @phpstan-import-type HamroCDNFile from File
+ *
+ * @phpstan-type HamroCDNObject array{
+ *      nanoId: string,
+ *      user: HamroCDNUser,
+ *      delete_at: string|null,
+ *      original: HamroCDNFile
+ * }
+ */
 final class Upload
 {
     private string $nanoId;
