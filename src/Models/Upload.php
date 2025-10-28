@@ -10,7 +10,7 @@ namespace HamroCDN\Models;
  *
  * @phpstan-type HamroCDNObject array{
  *      nanoId: string,
- *      user: HamroCDNUser,
+ *      user: HamroCDNUser|null,
  *      delete_at: string|null,
  *      original: HamroCDNFile
  * }
@@ -50,6 +50,7 @@ final class Upload
         return $this->original;
     }
 
+    /** @return HamroCDNObject */
     public function toArray(): array
     {
         return [

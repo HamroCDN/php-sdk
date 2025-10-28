@@ -32,6 +32,7 @@ final class File
         return $this->size;
     }
 
+    /** @return HamroCDNFile */
     public function toArray(): array
     {
         return [
@@ -44,8 +45,8 @@ final class File
     public static function fromArray(array $data): self
     {
         return new self(
-            $data['url'] ?? '',
-            (int) ($data['size'] ?? 0),
+            $data['url'],
+            (int) $data['size'],
         );
     }
 }

@@ -31,6 +31,7 @@ final class User
         return $this->email;
     }
 
+    /** @return HamroCDNUser */
     public function toArray(): array
     {
         return [
@@ -39,14 +40,12 @@ final class User
         ];
     }
 
-    /**
-     * @param HamroCDNUser $data
-     */
+    /** @param HamroCDNUser $data */
     public static function fromArray(array $data): self
     {
         return new self(
-            $data['name'] ?? '',
-            $data['email'] ?? '',
+            $data['name'],
+            $data['email'],
         );
     }
 }
