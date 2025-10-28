@@ -24,6 +24,24 @@ final class Upload
         private File $original
     ) {}
 
+    /** @param HamroCDNObject $data */
+    public static function fromArray(array $data): self
+    {
+        $user = null;
+        if (isset($data['user'])) {
+            $user = User::fromArray($data['user']);
+        }
+
+        $original = File::fromArray($data['original']);
+
+        return new self(
+            $data['nanoId'],
+            $user,
+            $data['delete_at'] ?? null,
+            $original
+        );
+    }
+
     public function getNanoId(): string
     {
         return $this->nanoId;
@@ -53,23 +71,5 @@ final class Upload
             'delete_at' => $this->deleteAt,
             'original' => $this->original->toArray(),
         ];
-    }
-
-    /** @param HamroCDNObject $data */
-    public static function fromArray(array $data): self
-    {
-        $user = null;
-        if (isset($data['user'])) {
-            $user = User::fromArray($data['user']);
-        }
-
-        $original = File::fromArray($data['original']);
-
-        return new self(
-            $data['nanoId'],
-            $user,
-            $data['delete_at'] ?? null,
-            $original
-        );
     }
 }

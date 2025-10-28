@@ -49,8 +49,13 @@ final class HamroCDN implements HamroCDNContract
         $data = $response['data'] ?? [];
         $meta = $response['meta'] ?? ['total' => 0, 'per_page' => $per_page, 'page' => $page];
 
+        $uploads = array_map(
+            fn (array|string|null $item): Upload => Upload::fromArray($item),
+            $data
+        );
+
         return [
-            'data' => array_map(fn ($item) => Upload::fromArray($item), $data),
+            'data' => $uploads,
             'meta' => $meta,
         ];
     }
@@ -86,6 +91,7 @@ final class HamroCDN implements HamroCDNContract
         ]);
 
         $data = $response['data'] ?? [];
+
         return Upload::fromArray($data);
     }
 
@@ -101,6 +107,7 @@ final class HamroCDN implements HamroCDNContract
         ]);
 
         $data = $response['data'] ?? [];
+
         return Upload::fromArray($data);
     }
 }
