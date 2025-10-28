@@ -8,6 +8,7 @@ use HamroCDN\Models\Upload;
 
 /**
  * @phpstan-import-type HamroCDNObject from Upload
+ * @phpstan-import-type UploadWithPagination from Upload
  *
  * @phpstan-type HamroCDNData array{
  *     data: HamroCDNObject
@@ -22,7 +23,7 @@ interface HamroCDNContract
     /**
      * List all of your files in HamroCDN.
      *
-     * @return HamroCDNObjectWithPagination
+     * @return UploadWithPagination
      */
     public function index(): array;
 

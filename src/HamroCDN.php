@@ -12,7 +12,9 @@ use HamroCDN\Traits\HasConfigValues;
 use HamroCDN\Traits\Requestable;
 
 /**
+ * @phpstan-import-type HamroCDNObject from Upload
  * @phpstan-import-type HamroCDNData from HamroCDNContract
+ * @phpstan-import-type HamroCDNObjectWithPagination from HamroCDNContract
  */
 final class HamroCDN implements HamroCDNContract
 {
@@ -41,22 +43,19 @@ final class HamroCDN implements HamroCDNContract
      */
     public function index(?int $per_page = 20, ?int $page = 1): array
     {
+        /** @var HamroCDNObjectWithPagination $response */
         $response = $this->get('uploads', [
             'per_page' => $per_page,
             'page' => $page,
         ]);
 
-        $data = $response['data'] ?? [];
-        $meta = $response['meta'] ?? ['total' => 0, 'per_page' => $per_page, 'page' => $page];
-
-        $uploads = array_map(
-            fn (array|string|null $item): Upload => Upload::fromArray($item),
-            $data
-        );
-
         return [
-            'data' => $uploads,
-            'meta' => $meta,
+            'data' => array_map(
+                /** @param HamroCDNObject $item */
+                fn (array $item): Upload => Upload::fromArray($item),
+                $response['data']
+            ),
+            'meta' => $response['meta'],
         ];
     }
 
@@ -66,9 +65,8 @@ final class HamroCDN implements HamroCDNContract
     public function fetch(string $nanoId): Upload
     {
         $response = $this->get("uploads/{$nanoId}");
-        $data = $response['data'] ?? [];
 
-        return Upload::fromArray($data);
+        return Upload::fromArray($response['data']);
     }
 
     /**
@@ -90,9 +88,7 @@ final class HamroCDN implements HamroCDNContract
             ],
         ]);
 
-        $data = $response['data'] ?? [];
-
-        return Upload::fromArray($data);
+        return Upload::fromArray($response['data']);
     }
 
     /**
@@ -106,8 +102,6 @@ final class HamroCDN implements HamroCDNContract
             ],
         ]);
 
-        $data = $response['data'] ?? [];
-
-        return Upload::fromArray($data);
+        return Upload::fromArray($response['data']);
     }
 }

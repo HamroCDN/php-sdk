@@ -14,6 +14,10 @@ namespace HamroCDN\Models;
  *      delete_at: string|null,
  *      original: HamroCDNFile
  * }
+ * @phpstan-type UploadWithPagination array{
+ *      data: array<Upload>,
+ *      meta: array{total: int, per_page: int, page: int}
+ *  }
  */
 final class Upload
 {
