@@ -23,13 +23,6 @@
             "HamroCDN\\Tests\\": "tests/"
         }
     },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "HamroCDN\\Laravel\\HamroCDNServiceProvider"
-            ]
-        }
-    },
     "authors": [
         {
             "name": "achyutkneupane",
