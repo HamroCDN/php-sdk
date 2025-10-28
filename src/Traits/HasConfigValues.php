@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace HamroCDN\Traits;
 
-use RuntimeException;
+use HamroCDN\Exceptions\HamroCDNException;
 
 trait HasConfigValues
 {
@@ -16,6 +16,8 @@ trait HasConfigValues
      * Resolve API key and base URL from multiple sources.
      *
      * @return array{string, string} [apiKey, baseUrl]
+     *
+     * @throws HamroCDNException
      */
     protected function resolveConfig(?string $apiKey = null, ?string $baseUrl = null): array
     {
@@ -34,7 +36,7 @@ trait HasConfigValues
         );
 
         if (empty($this->apiKey)) {
-            throw new RuntimeException('API key is required for HamroCDN client.');
+            throw new HamroCDNException('API key is required for HamroCDN client.');
         }
 
         return [$this->apiKey, $this->baseUrl];

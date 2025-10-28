@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use HamroCDN\Exceptions\HamroCDNException;
 use HamroCDN\HamroCDN;
 
 it('returns an array of HamroCDN objects from index', function () {
@@ -85,7 +86,7 @@ it('uploads a file by URL and returns a HamroCDN object', function () {
 
 describe('exception', function () {
     it('throws exception when API key is missing', function () {
-        $this->expectException(RuntimeException::class);
+        $this->expectException(HamroCDNException::class);
         $client = new HamroCDN();
         $client->index();
     });
@@ -95,7 +96,7 @@ describe('exception', function () {
 
         $filePath = __DIR__.'/non-existing-file.png';
 
-        $this->expectException(RuntimeException::class);
+        $this->expectException(HamroCDNException::class);
         $client->upload($filePath);
     });
 
@@ -108,7 +109,7 @@ describe('exception', function () {
 
         $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api', $guzzleClient);
 
-        $this->expectException(RuntimeException::class);
+        $this->expectException(HamroCDNException::class);
         $client->index();
     });
 });
