@@ -12,13 +12,18 @@ namespace HamroCDN\Models;
  */
 final class User
 {
-    private string $name;
-    private string $email;
+    public function __construct(
+        private string $name,
+        private string $email
+    ) {}
 
-    public function __construct(string $name, string $email)
+    /** @param HamroCDNUser $data */
+    public static function fromArray(array $data): self
     {
-        $this->name = $name;
-        $this->email = $email;
+        return new self(
+            $data['name'],
+            $data['email'],
+        );
     }
 
     public function getName(): string
@@ -38,14 +43,5 @@ final class User
             'name' => $this->name,
             'email' => $this->email,
         ];
-    }
-
-    /** @param HamroCDNUser $data */
-    public static function fromArray(array $data): self
-    {
-        return new self(
-            $data['name'],
-            $data['email'],
-        );
     }
 }

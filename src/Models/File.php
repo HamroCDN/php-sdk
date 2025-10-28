@@ -12,14 +12,18 @@ namespace HamroCDN\Models;
  */
 final class File
 {
-    private string $url;
+    public function __construct(
+        private string $url,
+        private int $size
+    ) {}
 
-    private int $size;
-
-    public function __construct(string $url, int $size)
+    /** @param HamroCDNFile $data */
+    public static function fromArray(array $data): self
     {
-        $this->url = $url;
-        $this->size = $size;
+        return new self(
+            $data['url'],
+            (int) $data['size'],
+        );
     }
 
     public function getUrl(): string
@@ -39,14 +43,5 @@ final class File
             'url' => $this->url,
             'size' => $this->size,
         ];
-    }
-
-    /** @param HamroCDNFile $data */
-    public static function fromArray(array $data): self
-    {
-        return new self(
-            $data['url'],
-            (int) $data['size'],
-        );
     }
 }

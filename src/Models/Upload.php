@@ -17,18 +17,12 @@ namespace HamroCDN\Models;
  */
 final class Upload
 {
-    private string $nanoId;
-    private ?User $user;
-    private ?string $deleteAt;
-    private File $original;
-
-    public function __construct(string $nanoId, ?User $user, ?string $deleteAt, File $original)
-    {
-        $this->nanoId = $nanoId;
-        $this->user = $user;
-        $this->deleteAt = $deleteAt;
-        $this->original = $original;
-    }
+    public function __construct(
+        private string $nanoId,
+        private ?User $user,
+        private ?string $deleteAt,
+        private File $original
+    ) {}
 
     public function getNanoId(): string
     {
