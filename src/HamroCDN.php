@@ -23,6 +23,8 @@ final class HamroCDN implements HamroCDNContract
      */
     use HasConfigValues, Requestable;
 
+    private const HEADER_UPLOAD_MEDIUM = 'php_sdk';
+
     public function __construct(?string $apiKey = null, ?string $baseUrl = null, ?Client $client = null)
     {
         [$this->apiKey, $this->baseUrl] = $this->resolveConfig($apiKey, $baseUrl);
@@ -43,7 +45,7 @@ final class HamroCDN implements HamroCDNContract
         $this->client = new Client(
             array_merge($currentConfig, [
                 'headers' => array_merge($currentHeaders, [
-                    'X-Upload-Medium' => 'sdk_php',
+                    'X-Upload-Medium' => self::HEADER_UPLOAD_MEDIUM,
                 ]),
             ])
         );
