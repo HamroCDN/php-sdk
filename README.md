@@ -68,6 +68,8 @@ echo "Fetched: " . $fetched->getOriginal()->getUrl() . PHP_EOL;
 
 ## 🚀 Usage
 
+This SDK make use of [public API](https://hamrocdn.com/docs/api) provided by HamroCDN. To get your API key, sign up at [hamrocdn.com](https://hamrocdn.com/dashboard) and navigate to *Edit Profile* page in your dashboard.
+
 ### 1. List Uploads
 
 #### 1.1 Paginated
