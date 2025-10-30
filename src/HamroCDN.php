@@ -14,6 +14,7 @@ use HamroCDN\Traits\Requestable;
 /**
  * @phpstan-import-type HamroCDNObject from Upload
  * @phpstan-import-type HamroCDNData from HamroCDNContract
+ * @phpstan-import-type HamroCDNArrayData from HamroCDNContract
  * @phpstan-import-type HamroCDNObjectWithPagination from HamroCDNContract
  */
 final class HamroCDN implements HamroCDNContract
@@ -131,5 +132,19 @@ final class HamroCDN implements HamroCDNContract
         ]);
 
         return Upload::fromArray($response['data']);
+    }
+
+    public function all(): array
+    {
+        /** @var HamroCDNArrayData $response */
+        $response = $this->get('uploads', [
+            'paginate' => false,
+        ]);
+
+        return array_map(
+            /** @param HamroCDNObject $item */
+            fn (array $item): Upload => Upload::fromArray($item),
+            $response['data']
+        );
     }
 }

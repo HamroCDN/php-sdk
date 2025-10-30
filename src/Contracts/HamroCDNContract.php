@@ -13,6 +13,9 @@ use HamroCDN\Models\Upload;
  * @phpstan-type HamroCDNData array{
  *     data: HamroCDNObject
  * }
+ * @phpstan-type HamroCDNArrayData array{
+ *      data: array<HamroCDNObject>
+ * }
  * @phpstan-type HamroCDNObjectWithPagination array{
  *     data: array<HamroCDNObject>,
  *     meta: array{total: int, per_page: int, page: int}
@@ -21,11 +24,18 @@ use HamroCDN\Models\Upload;
 interface HamroCDNContract
 {
     /**
-     * List all of your files in HamroCDN.
+     * List all your files in HamroCDN.
+     *
+     * @return array<Upload>
+     */
+    public function all(): array;
+
+    /**
+     * List your files in HamroCDN with pagination.
      *
      * @return UploadWithPagination
      */
-    public function index(): array;
+    public function index(?int $per_page = 20, ?int $page = 1): array;
 
     /**
      * Fetch a file from HamroCDN.

@@ -68,7 +68,9 @@ echo "Fetched: " . $fetched->getOriginal()->getUrl() . PHP_EOL;
 
 ## 🚀 Usage
 
-### 1. List Uploads (Paginated)
+### 1. List Uploads
+
+#### 1.1 Paginated
 
 The `index()` method returns paginated results.  
 You can provide pagination parameters such as `page` and `per_page`:
@@ -93,6 +95,19 @@ Example of returned metadata:
   }
 }
 ```
+
+#### 1.2 All Uploads
+
+To fetch all uploads without pagination, use the `all()` method:
+
+```php
+$uploads = $cdn->all();
+foreach ($uploads as $upload) {
+    echo $upload->getNanoId() . ' - ' . $upload->getOriginal()->getUrl() . PHP_EOL;
+}
+```
+
+> Returns an array of `Upload` models.
 
 ---
 
