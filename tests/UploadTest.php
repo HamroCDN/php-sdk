@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use HamroCDN\Exceptions\HamroCDNException;
 use HamroCDN\HamroCDN;
+use HamroCDN\Models\File;
 use HamroCDN\Models\Upload;
 use HamroCDN\Models\User;
 
@@ -12,15 +13,14 @@ expect()->extend('toBeUploadObject', function () {
     $upload = $this->value;
 
     expect($upload)
-        ->toBeInstanceOf(Upload::class);
-
-    expect($upload)
+        ->toBeInstanceOf(Upload::class)
         ->toHaveKey('nanoId')
         ->toHaveKey('user')
         ->toHaveKey('delete_at')
         ->toHaveKey('original');
 
     expect($upload->getOriginal())
+        ->toBeInstanceOf(File::class)
         ->toHaveKey('url')
         ->toHaveKey('size');
 
