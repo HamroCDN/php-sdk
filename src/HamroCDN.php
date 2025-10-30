@@ -135,6 +135,15 @@ final class HamroCDN implements HamroCDNContract
 
     public function all(): array
     {
-        //
+        /** @var HamroCDNArrayData $response */
+        $response = $this->get('uploads', [
+            'paginate' => false,
+        ]);
+
+        return array_map(
+            /** @param HamroCDNObject $item */
+            fn (array $item): Upload => Upload::fromArray($item),
+            $response['data']
+        );
     }
 }

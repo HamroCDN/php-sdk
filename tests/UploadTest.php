@@ -55,7 +55,7 @@ it('checks the dummy data to have correct value in model', function () {
 });
 
 describe('returns an array of HamroCDN objects from index', function () {
-    it('with pagination', function () {
+    test('with pagination', function () {
         $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api');
 
         $uploads = $client->index();
@@ -75,7 +75,7 @@ describe('returns an array of HamroCDN objects from index', function () {
         }
     });
 
-    it('without pagination', function () {
+    test('without pagination', function () {
         $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api');
 
         $uploads = $client->all();
