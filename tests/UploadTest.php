@@ -54,24 +54,37 @@ it('checks the dummy data to have correct value in model', function () {
     expect($upload->getUser()?->getEmail())->toBe('john@hamrocdn.com');
 });
 
-it('returns an array of HamroCDN objects from index', function () {
-    $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api');
+describe('returns an array of HamroCDN objects from index', function () {
+    it('with pagination', function () {
+        $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api');
 
-    $uploads = $client->index();
+        $uploads = $client->index();
 
-    expect($uploads)->toBeArray();
-    expect($uploads)
-        ->toHaveKey('data')
-        ->toHaveKey('meta');
+        expect($uploads)->toBeArray();
+        expect($uploads)
+            ->toHaveKey('data')
+            ->toHaveKey('meta');
 
-    expect($uploads['meta'])
-        ->toHaveKey('total')
-        ->toHaveKey('per_page')
-        ->toHaveKey('page');
+        expect($uploads['meta'])
+            ->toHaveKey('total')
+            ->toHaveKey('per_page')
+            ->toHaveKey('page');
 
-    foreach ($uploads['data'] as $upload) {
-        expect($upload)->toBeUploadObject();
-    }
+        foreach ($uploads['data'] as $upload) {
+            expect($upload)->toBeUploadObject();
+        }
+    });
+
+    it('without pagination', function () {
+        $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api');
+
+        $uploads = $client->all();
+
+        expect($uploads)->toBeArray();
+        foreach ($uploads as $upload) {
+            expect($upload)->toBeUploadObject();
+        }
+    });
 });
 
 it('uploads a file and returns a HamroCDN object', function () {
