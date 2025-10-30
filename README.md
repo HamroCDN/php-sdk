@@ -129,6 +129,14 @@ $upload = $cdn->upload('/path/to/image.png');
 echo $upload->getNanoId(); // nano ID of the uploaded file
 ```
 
+> To delete the file after a certain time, use the `deleteAfter` parameter (in seconds):
+
+```php
+$upload = $cdn->upload('/path/to/image.png', deleteAfter: 3600); // Deletes after 1 hour
+```
+
+> This will set the `deleteAt` property on the returned `Upload` model.
+
 ---
 
 ### 4. Upload by Remote URL
@@ -138,6 +146,8 @@ $upload = $cdn->uploadByURL('https://example.com/image.png');
 
 echo $upload->getOriginal()->getUrl();
 ```
+
+> Also supports the `deleteAfter` parameter.
 
 ---
 
