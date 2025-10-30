@@ -21,11 +21,11 @@ use HamroCDN\Models\Upload;
 interface HamroCDNContract
 {
     /**
-     * List all of your files in HamroCDN.
+     * List all of your files in HamroCDN (with pagination).
      *
      * @return UploadWithPagination
      */
-    public function index(): array;
+    public function index(?int $per_page = 20, ?int $page = 1): array;
 
     /**
      * Fetch a file from HamroCDN.
