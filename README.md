@@ -68,6 +68,8 @@ echo "Fetched: " . $fetched->getOriginal()->getUrl() . PHP_EOL;
 
 ## 🚀 Usage
 
+This SDK make use of [public API](https://hamrocdn.com/docs/api) provided by HamroCDN. To get your API key, sign up at [hamrocdn.com](https://hamrocdn.com/dashboard) and navigate to *Edit Profile* page in your dashboard.
+
 ### 1. List Uploads
 
 #### 1.1 Paginated
@@ -129,6 +131,14 @@ $upload = $cdn->upload('/path/to/image.png');
 echo $upload->getNanoId(); // nano ID of the uploaded file
 ```
 
+> To delete the file after a certain time, use the `deleteAfter` parameter (in seconds):
+
+```php
+$upload = $cdn->upload('/path/to/image.png', deleteAfter: 3600); // Deletes after 1 hour
+```
+
+> This will set the `deleteAt` property on the returned `Upload` model.
+
 ---
 
 ### 4. Upload by Remote URL
@@ -138,6 +148,8 @@ $upload = $cdn->uploadByURL('https://example.com/image.png');
 
 echo $upload->getOriginal()->getUrl();
 ```
+
+> Also supports the `deleteAfter` parameter.
 
 ---
 
@@ -149,13 +161,13 @@ echo $upload->getOriginal()->getUrl();
 |------------|--------------------|--------------------------------------|
 | `nanoId`   | `string`           | Unique identifier of the upload      |
 | `user`     | `User` or `null`   | Owner of the file (if authenticated) |
-| `deleteAt` | `string` or `null` | Deletion timestamp if temporary      |
+| `deleteAt` | `Carbon` or `null` | Deletion timestamp if temporary      |
 | `original` | `File`             | File information (URL, size)         |
 
 #### Methods
 - `getNanoId()`: `string`
 - `getUser()`: `?User`
-- `getDeleteAt()`: `?string`
+- `getDeleteAt()`: `?Carbon`
 - `getOriginal()`: `File`
 - `toArray()`: `array`
 
