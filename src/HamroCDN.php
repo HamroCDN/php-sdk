@@ -101,20 +101,28 @@ final class HamroCDN implements HamroCDNContract
     /**
      * @throws HamroCDNException
      */
-    public function upload(string $filePath): Upload
+    public function upload(string $filePath, ?int $deleteAfter = null): Upload
     {
         if (! file_exists($filePath)) {
             throw HamroCDNException::fileError($filePath);
         }
 
         $response = $this->post('uploads', [
-            'multipart' => [
+            'multipart' => array_merge(
                 [
-                    'name' => 'file',
-                    'contents' => fopen($filePath, 'r'),
-                    'filename' => basename($filePath),
+                    [
+                        'name' => 'file',
+                        'contents' => fopen($filePath, 'r'),
+                        'filename' => basename($filePath),
+                    ],
                 ],
-            ],
+                $deleteAfter !== null ? [
+                    [
+                        'name' => 'delete_after',
+                        'contents' => (string) $deleteAfter,
+                    ],
+                ] : []
+            ),
         ]);
 
         return Upload::fromArray($response['data']);
