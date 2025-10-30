@@ -159,13 +159,13 @@ echo $upload->getOriginal()->getUrl();
 |------------|--------------------|--------------------------------------|
 | `nanoId`   | `string`           | Unique identifier of the upload      |
 | `user`     | `User` or `null`   | Owner of the file (if authenticated) |
-| `deleteAt` | `string` or `null` | Deletion timestamp if temporary      |
+| `deleteAt` | `Carbon` or `null` | Deletion timestamp if temporary      |
 | `original` | `File`             | File information (URL, size)         |
 
 #### Methods
 - `getNanoId()`: `string`
 - `getUser()`: `?User`
-- `getDeleteAt()`: `?string`
+- `getDeleteAt()`: `?Carbon`
 - `getOriginal()`: `File`
 - `toArray()`: `array`
 
