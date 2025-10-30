@@ -123,17 +123,36 @@ describe('uploads a file and returns a HamroCDN object', function () {
     });
 });
 
-it('uploads a file by URL and returns a HamroCDN object', function () {
-    $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api');
+describe('uploads a file by URL and returns a HamroCDN object', function () {
+    test('without delete_after', function () {
+        $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api');
 
-    $fileUrl = 'https://placehold.co/1000x1000/000000/FFFFFF?text=HamroCDN';
+        $fileUrl = 'https://placehold.co/1000x1000/000000/FFFFFF?text=HamroCDN';
 
-    $upload = $client->uploadByURL($fileUrl);
-    expect($upload)->toBeUploadObject();
+        $upload = $client->uploadByURL($fileUrl);
+        expect($upload)->toBeUploadObject();
 
-    $fetchedUpload = $client->fetch($upload->getNanoId());
-    expect($fetchedUpload)
-        ->toBeUploadObject();
+        $fetchedUpload = $client->fetch($upload->getNanoId());
+        expect($fetchedUpload)
+            ->toBeUploadObject();
+    });
+
+    test('with delete_after', function () {
+        $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api');
+
+        $fileUrl = 'https://placehold.co/1000x1000/000000/FFFFFF?text=HamroCDN';
+        $deleteAfter = 100;
+
+        $upload = $client->uploadByURL($fileUrl, $deleteAfter);
+
+        expect($upload)->toBeUploadObject();
+        expect($upload->getDeleteAt())->not->toBeNull();
+
+        $fetchedUpload = $client->fetch($upload->getNanoId());
+        expect($fetchedUpload)
+            ->toBeUploadObject();
+        expect($fetchedUpload->getDeleteAt())->not->toBeNull();
+    });
 });
 
 describe('exception', function () {
