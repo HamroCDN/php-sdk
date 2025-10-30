@@ -33,11 +33,11 @@ it('checks the dummy data to have correct value in model', function () {
         'nanoId' => 'abc123',
         'user' => [
             'name' => 'John Doe',
-            'email' => 'john@hamrocdn.com',
+            'email' => 'john@hamrocdn.test',
         ],
         'delete_at' => null,
         'original' => [
-            'url' => 'https://hamrocdn.com/abc123.png',
+            'url' => 'https://hamrocdn.test/abc123.png',
             'size' => 2048,
         ],
     ];
@@ -48,14 +48,14 @@ it('checks the dummy data to have correct value in model', function () {
 
     expect($upload->getNanoId())->toBe('abc123');
     expect($upload->getDeleteAt())->toBeNull();
-    expect($upload->getOriginal()->getUrl())->toBe('https://hamrocdn.com/abc123.png');
+    expect($upload->getOriginal()->getUrl())->toBe('https://hamrocdn.test/abc123.png');
     expect($upload->getOriginal()->getSize())->toBe(2048);
     expect($upload->getUser()?->getName())->toBe('John Doe');
-    expect($upload->getUser()?->getEmail())->toBe('john@hamrocdn.com');
+    expect($upload->getUser()?->getEmail())->toBe('john@hamrocdn.test');
 });
 
 it('returns an array of HamroCDN objects from index', function () {
-    $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api');
+    $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api');
 
     $uploads = $client->index();
 
@@ -75,7 +75,7 @@ it('returns an array of HamroCDN objects from index', function () {
 });
 
 it('uploads a file and returns a HamroCDN object', function () {
-    $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api');
+    $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api');
 
     $filePath = __DIR__.'/test.png';
     $upload = $client->upload($filePath);
@@ -91,7 +91,7 @@ it('uploads a file and returns a HamroCDN object', function () {
 });
 
 it('uploads a file by URL and returns a HamroCDN object', function () {
-    $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api');
+    $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api');
 
     $fileUrl = 'https://placehold.co/1000x1000/000000/FFFFFF?text=HamroCDN';
 
@@ -111,7 +111,7 @@ describe('exception', function () {
     });
 
     it('throws exception when uploading a non-existing file', function () {
-        $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api');
+        $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api');
 
         $filePath = __DIR__.'/non-existing-file.png';
 
@@ -126,7 +126,7 @@ describe('exception', function () {
         $handlerStack = GuzzleHttp\HandlerStack::create($mockHandler);
         $guzzleClient = new GuzzleHttp\Client(['handler' => $handlerStack]);
 
-        $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api', $guzzleClient);
+        $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api', $guzzleClient);
 
         $this->expectException(HamroCDNException::class);
         $client->index();
@@ -139,7 +139,7 @@ describe('exception', function () {
         $handlerStack = GuzzleHttp\HandlerStack::create($mockHandler);
         $guzzleClient = new GuzzleHttp\Client(['handler' => $handlerStack]);
 
-        $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/api', $guzzleClient);
+        $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/api', $guzzleClient);
 
         $filePath = __DIR__.'/test.png';
 
@@ -148,14 +148,14 @@ describe('exception', function () {
     });
 
     it('throws network error when Guzzle cannot connect to server. (GET)', function () {
-        $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/invalid-api');
+        $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/invalid-api');
 
         $this->expectException(HamroCDNException::class);
         $client->index();
     });
 
     it('throws network error when Guzzle cannot connect to server. (POST)', function () {
-        $client = new HamroCDN('test-api-key', 'https://hamrocdn.com/invalid-api');
+        $client = new HamroCDN('test-api-key', 'https://hamrocdn.test/invalid-api');
 
         $filePath = __DIR__.'/test.png';
 

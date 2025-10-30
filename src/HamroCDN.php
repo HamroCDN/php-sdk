@@ -36,6 +36,17 @@ final class HamroCDN implements HamroCDNContract
                 'Accept' => 'application/json',
             ],
         ]);
+
+        $currentConfig = $this->client->getConfig();
+        $currentHeaders = $currentConfig['headers'] ?? [];
+
+        $this->client = new Client(
+            array_merge($currentConfig, [
+                'headers' => array_merge($currentHeaders, [
+                    'X-Upload-Medium' => 'php_sdk',
+                ]),
+            ])
+        );
     }
 
     /**
