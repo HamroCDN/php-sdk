@@ -29,28 +29,41 @@ final class HamroCDN implements HamroCDNContract
     {
         [$this->apiKey, $this->baseUrl] = $this->resolveConfig($apiKey, $baseUrl);
 
-        $clientConfig = $client?->getConfig() ?? [];
+        /** @var array<string, mixed>|null $paramConfig */
+        $paramConfig = $client?->getConfig();
+
+        /** @var array<string, string> $currentHeaders */
         $currentHeaders = array_key_exists(
             'headers',
-            $clientConfig ?? [])
-            ? $clientConfig['headers']
+            $paramConfig ?? []
+        )
+            ? $paramConfig['headers']
             : [
                 'X-API-KEY' => $this->apiKey,
                 'Accept' => 'application/json',
             ];
-        $currentConfig = $clientConfig ?? [
+
+        /** @var array<string, mixed> $currentConfig */
+        $currentConfig = $paramConfig ?? [
             'base_uri' => "{$this->baseUrl}/",
             'timeout' => 15,
             'verify' => true,
         ];
 
-        $this->client = new Client(
-            array_merge($currentConfig, [
-                'headers' => array_merge($currentHeaders, [
-                    'X-Upload-Medium' => self::HEADER_UPLOAD_MEDIUM,
-                ]),
-            ])
+        $clientHeaders = array_merge(
+            $currentHeaders,
+            [
+                'X-Upload-Medium' => self::HEADER_UPLOAD_MEDIUM,
+            ]
         );
+        $clientConfig = array_merge(
+            $currentConfig,
+            [
+                'headers' => $clientHeaders,
+            ]
+        );
+
+        $this->client = new Client($clientConfig);
     }
 
     /**
