@@ -13,13 +13,14 @@ use HamroCDN\Traits\Requestable;
 
 /**
  * @phpstan-import-type HamroCDNObject from Upload
+ * @phpstan-import-type HamroCDNData from HamroCDNContract
  * @phpstan-import-type HamroCDNArrayData from HamroCDNContract
  * @phpstan-import-type HamroCDNObjectWithPagination from HamroCDNContract
  */
 final class HamroCDN implements HamroCDNContract
 {
     /**
-     * @use Requestable<HamroCDNObject>
+     * @use Requestable<HamroCDNData>
      */
     use HasConfigValues, Requestable;
 
