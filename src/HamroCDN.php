@@ -131,11 +131,12 @@ final class HamroCDN implements HamroCDNContract
     /**
      * @throws HamroCDNException
      */
-    public function uploadByURL(string $url): Upload
+    public function uploadByURL(string $url, ?int $deleteAfter = null): Upload
     {
         $response = $this->post('upload-from-url', [
             'json' => [
                 'url' => $url,
+                'delete_after' => $deleteAfter,
             ],
         ]);
 

@@ -50,5 +50,5 @@ interface HamroCDNContract
     /**
      * Upload a file to HamroCDN by URL.
      */
-    public function uploadByURL(string $url): Upload;
+    public function uploadByURL(string $url, ?int $deleteAfter = null): Upload;
 }
